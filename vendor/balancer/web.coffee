@@ -44,7 +44,6 @@ class Connection
 
   data: (data) ->
     log.start "request.data", (log) =>
-      console.log "data", data.toString(), @acked
       if @acked
         @publish "data", data, (err) => log.success id:@id, length:data.length
       else
