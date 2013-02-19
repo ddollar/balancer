@@ -9,7 +9,7 @@ Copy these files into your app. Make sure your have an `OPENREDIS_URL`.
 Change the `web` entry in your Procfile and add an `app` entry:
 
     web: vendor/balancer/bin/web
-    app: vendor/balancer/bin/app
+    app: vendor/balancer/bin/app -n 1 -c 'bundle exec thin start --socket %socket%'
 
 ## How it Works
 
