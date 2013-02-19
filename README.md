@@ -6,7 +6,7 @@ Unicorn-style proxy in front of multiple app servers. Currently only works with 
 
 Copy these files into your app. Make sure your have an `OPENREDIS_URL`.
 
-Change the `web` entry in your Procfile and add an `app` entry:
+Create the following `web` and `app` entries in your Procfile:
 
     web: vendor/balancer/bin/web
     app: vendor/balancer/bin/app -n 1 -c 'bundle exec thin start --socket %socket%'
