@@ -4,7 +4,7 @@ Unicorn-style proxy in front of multiple app servers. Currently only works with 
 
 ## Installation
 
-Put some untar instructions here
+Copy these files into your app. Make sure your have an `OPENREDIS_URL`.
 
 ## Usage
 
