@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ROOT=$(dirname $(dirname $0))
+
+if [ "$NODE_ENV" == "production" ]; then
+  $ROOT/node_modules/.bin/coffee $ROOT/web.coffee
+else
+  $ROOT/node_modules/.bin/nodemon -w $ROOT $ROOT/web.coffee 
+fi

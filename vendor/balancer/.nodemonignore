@@ -1,0 +1,7 @@
+.git
+*.swp
+bin/dragon
+lib/cli.coffee
+public/*
+stylus/*
+views/*
