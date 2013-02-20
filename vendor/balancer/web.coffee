@@ -72,23 +72,21 @@ class Connection
         log.success id:@id
 
 
-redis.flushdb ->
+redisps.subscribe "pb.ack"
 
-  redisps.subscribe "pb.ack"
+redisps.on "message", (channel, data) ->
+  if channel is "pb.ack"
+    connection = connections[data]
+    connection.ack()
+  else if match = /^pb.connection.([0-9a-f-]+).in.data/.exec(channel)
+    connections[match[1]].write new Buffer(data, "base64").toString("binary"), "binary"
+  else if match = /^pb.connection.([0-9a-f-]+).in.end/.exec(channel)
+    connections[match[1]].close()
 
-  redisps.on "message", (channel, data) ->
-    if channel is "pb.ack"
-      connection = connections[data]
-      connection.ack()
-    else if match = /^pb.connection.([0-9a-f-]+).in.data/.exec(channel)
-      connections[match[1]].write new Buffer(data, "base64").toString("binary"), "binary"
-    else if match = /^pb.connection.([0-9a-f-]+).in.end/.exec(channel)
-      connections[match[1]].close()
+server = net.createServer (conn) ->
+  connection = new Connection(conn)
+  connections[connection.id] = connection
 
-  server = net.createServer (conn) ->
-    connection = new Connection(conn)
-    connections[connection.id] = connection
-
-  log.start "listen", port:port, (log) ->
-    server.listen port, ->
-      log.success()
+log.start "listen", port:port, (log) ->
+  server.listen port, ->
+    log.success()
